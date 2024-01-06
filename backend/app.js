@@ -2,7 +2,7 @@ const express = require('express');
 const connectToMongoDB = require('./config');
 const userModel = require('./api/model/user');
 const app = express();
-const port = 4001;
+const port = 6001;
 connectToMongoDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
