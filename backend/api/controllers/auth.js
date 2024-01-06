@@ -2,18 +2,12 @@ const userModel = require("../model/user")
 const jwt = require('jsonwebtoken');
 const login = async (req, res) => {
     try {
-        const user = await userModel.findOne({ email: req?.body?.email });
-        if (!user) return res.status(404).send('Invalid Credentials!');
-        if (user?.password === req?.body?.password) {
-            const dataToEncrypt = {
-                email: user.email,
-                name: user?.name,
-                role: user?.role,
-            }
-            const token = jwt.sign(dataToEncrypt, "WebEducatorz@786", { expiresIn: '24h' });
-            return res.send({ token });
+        const user = await userModel.findOne({email:req?.body?.email});
+        if(!user) return res.status(404).send('Invalid Credentials!');
+        if(user?.password===req?.body?.password) {
+            return res?.json({status:true, data:"0548"})
         } else {
-            return res.status(404).send('Invalid Credentials!');
+            return res.json({status:false, data:"Invalid Credentials!", message:"Invalid Credentials!"});
         }
     } catch (error) {
         return res.status(401).send(error?.message);

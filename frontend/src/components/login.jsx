@@ -14,7 +14,26 @@ const Login = () => {
     }
     setLogin(updateData);
   };
-
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:4001/web-educatorz/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(login),
+      });
+      const data = await response.json();
+      if(data?.status){
+        localStorage.setItem("token", data.data);
+        window.location.href = "/";
+      }
+      else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert("something Went Wrong")
+    }
+}
   return (
     <>
       <div className="container my-3">
@@ -48,7 +67,7 @@ const Login = () => {
                   />
                 </div>
                 <div className="my-3"></div>
-                <button onClick={()=>console.log(login)} type="button" className="btn btn-primary">
+                <button onClick={handleSubmit} type="button" className="btn btn-primary">
                   Submit
                 </button>
               </form>
